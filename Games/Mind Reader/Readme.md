@@ -1,1 +1,3 @@
+MIND READER
+
 This is a simple number guessing game that is implemented in Python. The game has two modes: singleplayer and multiplayer. In the singleplayer mode, the player has to guess a number between 1 and 10 within a time limit of 10 seconds. The game provides hints based on the user's guess, and the player's score is reduced with each incorrect guess. In the multiplayer mode, two players take turns to guess the number, and the player who guesses correctly first wins the game. The game also records the score for each player.
