@@ -16,8 +16,16 @@ score = 100
 while guess != number and num_guesses < 3:
     if guess < number:
         print("Too low!")
+        if number % 2 == 0:
+            print("Hint: The number is even.")
+        else:
+            print("Hint: The number is odd.")
     else:
         print("Too high!")
+        if number % 3 == 0:
+            print("Hint: The number is divisible by 3.")
+        else:
+            print("Hint: The number is not divisible by 3.")
     
     # Ask the user to guess again
     guess = int(input("Guess again: "))
