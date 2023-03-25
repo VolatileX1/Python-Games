@@ -1,18 +1,19 @@
 import random
 
-# Define the maze as a nested list of strings
-maze = [
-    ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
-    ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#'],
-    ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
-    ['#', ' ', '#', ' ', ' ', ' ', '#', ' ', '#'],
-    ['#', ' ', '#', '#', '#', '#', '#', ' ', '#'],
-    ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', '#', '#', ' ', '#', '#', '#', '#', '#'],
-    ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', '#', '#', '#', '#', '#', '#', '#', '#']
-]
+# Define the size of the maze
+MAZE_SIZE = 15
 
+# Generate a random maze as a nested list of strings
+maze = []
+for i in range(MAZE_SIZE):
+    row = ['#'] * MAZE_SIZE
+    maze.append(row)
+
+for i in range(1, MAZE_SIZE-1):
+    for j in range(1, MAZE_SIZE-1):
+        if random.random() < 0.7:
+            maze[i][j] = ' '
+            
 # Define the robot's starting position and direction
 robot_row = 1
 robot_col = 1
@@ -77,7 +78,7 @@ def turn_right():
         robot_dir = "down"
 
 # Play the game until the robot reaches the end of the maze
-while robot_row != len(maze)-2 or robot_col != len(maze[0])-2:
+while robot_row != MAZE_SIZE-2 or robot_col != MAZE_SIZE-2:
     print_maze()
     print("Enter 'f' to move forward, 'l' to turn left, or 'r' to turn right.")
     user_input = input()
