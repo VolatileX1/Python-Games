@@ -30,7 +30,7 @@ checkpoints = [
 score = 0
 num_moves_left = 50
 
-# Define a function to print the maze with the robot's position
+# Define a function to print the maze with the robot's position and a mini-map
 def print_maze():
     global score
     for row in range(len(maze)):
@@ -50,7 +50,19 @@ def print_maze():
                 print("X", end="")
             else:
                 print(maze[row][col], end="")
+
+        # Print the mini-map
+        print("\t", end="")
+        for col in range(len(maze[row])):
+            if row == robot_row and col == robot_col:
+                # Print an asterisk on the mini-map to denote the robot's position
+                print("*", end="")
+            else:
+                # Print a blank space on the mini-map
+                print(" ", end="")
         print()
+
+    # Print the score and moves left
     print("Score:", score)
     print("Moves left:", num_moves_left)
 
@@ -108,26 +120,34 @@ def turn_right():
 
 # Play the game until the robot reaches all checkpoints or runs out of moves
 checkpoints_reached = set()
+
 while checkpoints_reached != set(checkpoints) and num_moves_left > 0:
     print_maze()
     print("Enter 'f' to move forward, 'l' to turn left, or 'r' to turn right.")
     user_input = input()
+    
     if user_input == "f":
         move_forward()
+
         if (robot_row, robot_col) in checkpoints:
             # Add 10 points for each checkpoint reached
             score += 10
             checkpoints_reached.add((robot_row, robot_col))
+            
     elif user_input == "l":
         turn_left()
+        
     elif user_input == "r":
         turn_right()
+        
     else:
         print("Invalid input. Please try again.")
+    
     print_maze()
 
 if checkpoints_reached == set(checkpoints):
     print("Congratulations! You reached all the checkpoints!")
 else:
     print("Game over. Better luck next time!")
+    
 print(f"Your final score is {score}.")
