@@ -13,11 +13,18 @@ for i in range(1, MAZE_SIZE-1):
     for j in range(1, MAZE_SIZE-1):
         if random.random() < 0.7:
             maze[i][j] = ' '
-            
+
 # Define the robot's starting position and direction
 robot_row = 1
 robot_col = 1
 robot_dir = "right"
+
+# Define the checkpoints for the robot to reach
+checkpoints = [
+    (MAZE_SIZE//3, MAZE_SIZE//3),
+    (2*MAZE_SIZE//3, 2*MAZE_SIZE//3),
+    (MAZE_SIZE-2, MAZE_SIZE-2)
+]
 
 # Define a function to print the maze with the robot's position
 def print_maze():
@@ -33,6 +40,9 @@ def print_maze():
                     print("<", end="")
                 elif robot_dir == "right":
                     print(">", end="")
+            elif (row, col) in checkpoints:
+                # Print a checkpoint instead of the maze character
+                print("X", end="")
             else:
                 print(maze[row][col], end="")
         print()
@@ -77,18 +87,25 @@ def turn_right():
     elif robot_dir == "right":
         robot_dir = "down"
 
-# Play the game until the robot reaches the end of the maze
-while robot_row != MAZE_SIZE-2 or robot_col != MAZE_SIZE-2:
+# Play the game until the robot reaches all checkpoints or runs out of moves
+num_moves_left = 50 # Set a limit for the number of moves
+checkpoints_reached = set()
+while checkpoints_reached != set(checkpoints) and num_moves_left > 0:
     print_maze()
     print("Enter 'f' to move forward, 'l' to turn left, or 'r' to turn right.")
     user_input = input()
     if user_input == "f":
         move_forward()
+        num_moves_left -= 1
+        if (robot_row, robot_col) in checkpoints:
+            checkpoints_reached.add((robot_row, robot_col))
     elif user_input == "l":
         turn_left()
     elif user_input == "r":
         turn_right()
 
-# The robot has reached the end of the maze!
-print("Congratulations, you have reached the end of the maze!")
-print_maze()
+# Determine the outcome of the game
+if checkpoints_reached == set(checkpoints):
+    print("Congratulations, you have reached all checkpoints!")
+else:
+    print("Game over, you have run out of moves or failed to reach all checkpoints.")
